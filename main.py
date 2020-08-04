@@ -17,14 +17,14 @@ class Sending:
         self.myhost=myhost
         self.myport=myport
 
-    def Send(self,subject_,from_,to_addr,content):
+    def Send(self,subject_,from_,to_addr,content_):
 
         msg=MIMEMultipart()
         msg['Subject']=subject_
         msg['From']=from_
         msg['To']=to_addr
         #msg.set_payload(content, "UTF-8")
-        msg.attach(MIMEText(content,"html","UTF-8"))
+        msg.attach(MIMEText(content_,"html","UTF-8"))
         try:
             #mail=sm.SMTP('10.18.93.128:25')
             #context = sm.ssl.create_default_context()
@@ -89,27 +89,29 @@ def main():
     if(len(lscreative)>0):
         fn = int(input("Chose Creative By Number:"))
         opmax = int(input("SMTP Rotation (MAX 500 Per Day):"))
+        startIn = int(input("Data Offset :"))
+        maxIn = int(input("Data Limit :"))
+        if(maxIn>len(lsdata)):
+            maxIn=len(lsdata)-1
+        subject_=lscreative[fn-1][0]
+        from_=lscreative[fn-1][1]
+        content_=lscreative[fn-1][2]
 
-        subject_ = lscreative[fn-1][0]
-        from_ = lscreative[fn-1][1]
-        content_ = lscreative[fn-1][2]
-        opmax = int(input("SMTP Rotation (MAX 500 Per Day):"))
+        for aindex in xrange(0,len(lsaccount)):
+            print("Data Offset : "+startIn)
+            print("Data Limit : "+maxIn)
+            print("#################### --"+str(aindex+1)+"-- #############################")
 
-        for index in xrange(0,len(lsaccount)):
-            print("#################### --"+str(index+1)+"-- #############################")
-
-            print('Using Email : '+lsaccount[index][0]+" Number "+str(index+1))
-            s=Sending(lsaccount[index][0],lsaccount[index][1],'smtp.gmail.com',587)
+            print('Using Email : '+lsaccount[aindex][0]+" Number "+str(aindex+1))
+            s=Sending(lsaccount[aindex][0],lsaccount[aindex][1],'smtp.gmail.com',587)
             print("Port : 587")
             op=0
-            mindex=0
-            while (mindex<len(lsdata) and op<=opmax):
+            while (maxIn<len(lsdata) and op<=opmax):
             
-                print("Email Number "+str(mindex+1)+" withe ----->"+lsaccount[index][0]+" Sending to -+-+-+-+"+lsdata[mindex])
-                if(s.Send(subject_,from_,lsdata[mindex],content_)==True):
-                    #time.sleep(5)
-                    print(lsdata[mindex]+" send it.")
-                    mindex=mindex+1
+                print("Email Number "+str(startIn+1)+" withe ----->"+lsaccount[aindex][0]+" Sending to -+-+-+-+"+lsdata[startIn])
+                if(s.Send(subject_,from_,lsdata[startIn],content_)==True):
+                    print(lsdata[startIn]+" send it.")
+                    startIn=startIn+1
                     op=op+1
                 else:
                     break
