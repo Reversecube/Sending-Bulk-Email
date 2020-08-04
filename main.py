@@ -111,7 +111,7 @@ def main():
             
                 print("Email Number "+str(startIn+1)+" withe ----->"+lsaccount[aindex][0]+" Sending to -+-+-+-+"+lsdata[startIn])
                 if(s.Send(subject_,from_,lsdata[startIn],content_)==True):
-                    print(lsdata[startIn]+" send it.")
+                    print(lsdata[startIn]+" Send it.")
                     startIn=startIn+1
                     op=op+1
                 else:
