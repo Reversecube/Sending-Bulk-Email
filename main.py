@@ -84,6 +84,7 @@ def main():
     #!--Get Creative From Excel File
     lscreative = excel.load_creative()
     #print(lscreative)
+    #!--Send Emails
     s=Sending()
     print("------------------------------------Welcome To Sending-Bluk-Email---------------------------------")
     if(len(lscreative)>0):
