@@ -12,7 +12,7 @@
 
 ### 1 - Lanch The code
 
-### 2 - Enter Creative Number In List creatives
+### 2 - Enter Creative Number Start By 1
 
 ### 3 - Enter SMTP Rotation
 
