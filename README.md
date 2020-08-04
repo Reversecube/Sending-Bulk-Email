@@ -16,8 +16,8 @@
 
 ### 3 - Enter SMTP Rotation
 
-### 4 - Data Offset
+### 4 - Enter Data Offset
 
-### 5 - Data Limit
+### 5 - Enter Data Limit
 
 ### 6 - Done !!
