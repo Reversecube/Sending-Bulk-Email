@@ -5,8 +5,8 @@
 # @license	Reversecube            #
 # @link	http://reversecube.site    #
 ####################################
-import smtplib as sm
 import pandas as pd
+import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -26,9 +26,9 @@ class Sending:
         #msg.set_payload(content, "UTF-8")
         msg.attach(MIMEText(content_,"html","UTF-8"))
         try:
-            #mail=sm.SMTP('10.18.93.128:25')
-            #context = sm.ssl.create_default_context()
-            mail=sm.SMTP(self.myhost,self.myport)
+            #mail=smtplib.SMTP('10.18.93.128:25')
+            #context = smtplib.ssl.create_default_context()
+            mail=smtplib.SMTP(self.myhost,self.myport)
             print('Connect To Server :'+self.myhost+'/'+str(self.myport))
             #mail.ehlo()
             mail.starttls()
@@ -37,7 +37,7 @@ class Sending:
                 mail.login(self.email, self.password)
                 print('Connect To Compte '+self.email+'/'+self.password)
             except:
-                self.field_list(self.email+','+self.password+','+self.myhost+','+str(self.myport))      
+                pass     
             mail.sendmail(self.email, to_addr,msg.as_string())
             print('done')            
             mail.quit()
@@ -87,7 +87,7 @@ def main():
     #!--Send Emails
     s=Sending()
     print("------------------------------------Welcome To Sending-Bluk-Email---------------------------------")
-    if(len(lscreative)>0):
+    if(len(lscreative)>0 and len(lsdata)>0 and len(lsaccount)>0):
         fn = int(input("Chose Creative By Number:"))
         opmax = int(input("SMTP Rotation (MAX 500 Per Day):"))
         startIn = int(input("Data Offset :"))
@@ -99,8 +99,8 @@ def main():
         content_=lscreative[fn-1][2]
 
         for aindex in xrange(0,len(lsaccount)):
-            print("Data Offset : "+startIn)
-            print("Data Limit : "+maxIn)
+            print("Data Offset : "+str(startIn))
+            print("Data Limit : "+str(maxIn))
             print("#################### --"+str(aindex+1)+"-- #############################")
 
             print('Using Email : '+lsaccount[aindex][0]+" Number "+str(aindex+1))
@@ -109,7 +109,7 @@ def main():
             op=0
             while (maxIn<len(lsdata) and op<=opmax):
             
-                print("Email Number "+str(startIn+1)+" withe ----->"+lsaccount[aindex][0]+" Sending to -+-+-+-+"+lsdata[startIn])
+                print("Email Number "+str(startIn+1)+" withe ----->"+lsaccount[aindex][0]+" Sending to -----> "+lsdata[startIn])
                 if(s.Send(subject_,from_,lsdata[startIn],content_)==True):
                     print(lsdata[startIn]+" Send it.")
                     startIn=startIn+1
@@ -120,3 +120,4 @@ def main():
     print("----------------------------------------------------------------------------------------")
 if __name__ == '__main__':
     main()
+
